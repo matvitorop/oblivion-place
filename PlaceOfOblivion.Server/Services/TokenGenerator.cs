@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using PlaceOfOblivion.Server.Models;
+using PlaceOfOblivion.Server.Models.Domain;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

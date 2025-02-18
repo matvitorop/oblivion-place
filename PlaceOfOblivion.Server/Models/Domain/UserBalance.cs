@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PlaceOfOblivion.Server.Models
+namespace PlaceOfOblivion.Server.Models.Domain
 {
     [Table("UserBalance")]
     public class UserBalance

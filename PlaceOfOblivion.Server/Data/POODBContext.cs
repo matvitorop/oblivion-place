@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlaceOfOblivion.Server.Models;
+using PlaceOfOblivion.Server.Models.Domain;
 using System;
 
 namespace PlaceOfOblivion.Server.Data

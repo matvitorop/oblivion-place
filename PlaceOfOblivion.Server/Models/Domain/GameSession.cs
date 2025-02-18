@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PlaceOfOblivion.Server.Models
+namespace PlaceOfOblivion.Server.Models.Domain
 {
     [Table("GameSession")]
     public class GameSession
@@ -19,7 +19,7 @@ namespace PlaceOfOblivion.Server.Models
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public string Symbols { get; set; } = string.Empty; 
+        public string Symbols { get; set; } = string.Empty;
 
         [Required]
         public bool IsWin { get; set; }
