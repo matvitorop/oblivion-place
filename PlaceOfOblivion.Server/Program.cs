@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlaceOfOblivion.Server.Data;
+using PlaceOfOblivion.Server.Mapping;
 using PlaceOfOblivion.Server.Repositories.Implementations;
 using PlaceOfOblivion.Server.Repositories.Interfaces;
 using PlaceOfOblivion.Server.Services;
@@ -68,6 +69,10 @@ builder.Services.AddDbContext<POODbContext>(options =>
 //Adding Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+//Adding automappers
+builder.Services.AddAutoMapper(typeof(UserMapper));
+
 
 //Add JWT settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
