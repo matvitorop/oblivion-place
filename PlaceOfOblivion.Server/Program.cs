@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlaceOfOblivion.Server.Data;
+using PlaceOfOblivion.Server.Repositories.Implementations;
+using PlaceOfOblivion.Server.Repositories.Interfaces;
 using PlaceOfOblivion.Server.Services;
+using PlaceOfOblivion.Server.Services.Implementations;
+using PlaceOfOblivion.Server.Services.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +65,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<POODbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Adding Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 //Add JWT settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
