@@ -20,6 +20,6 @@ namespace PlaceOfOblivion.Server.Models
 
         [Required]
         [MaxLength(100)]
-        public string Password { get; set; } = string.Empty;
+        public string HashedPassword { get; set; } = string.Empty;
     }
 }

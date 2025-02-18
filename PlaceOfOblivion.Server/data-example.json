@@ -1,0 +1,12 @@
+// Enter this data to appsettings.json for correct program work
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER;Database=YOUR_DATABASE;Trusted_Connection=True;TrustServerCertificate=True"
+  },
+
+  "JwtSettings": {
+    "Issuer": "https://localhost:7289", // Check configuration
+    "Audience": "https://localhost:50760", // Check configuration
+    "Key": "my_super_secure_secret_key_123456" // Your secred key
+  }
+}
