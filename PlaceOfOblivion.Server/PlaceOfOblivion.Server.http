@@ -1,0 +1,6 @@
+@PlaceOfOblivion.Server_HostAddress = http://localhost:5287
+
+GET {{PlaceOfOblivion.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
