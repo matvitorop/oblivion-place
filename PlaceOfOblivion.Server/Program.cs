@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PlaceOfOblivion.Server.Data;
+using PlaceOfOblivion.Server.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,6 +57,11 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Add dbContext to services
+builder.Services.AddDbContext<POODbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 //Add JWT settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
@@ -74,6 +82,9 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
     };
 });
+
+//Add service for token generations
+builder.Services.AddScoped<TokenGenerator>();
 
 var app = builder.Build();
 

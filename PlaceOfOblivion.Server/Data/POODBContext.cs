@@ -4,13 +4,13 @@ using System;
 
 namespace PlaceOfOblivion.Server.Data
 {
-    public class POODBContext : DbContext
+    public class POODbContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<UserBalance> UserBalances { get; set; } = null!;
         public DbSet<GameSession> GameSessions { get; set; } = null!;
 
-        public POODBContext(DbContextOptions options) : base(options) { }
+        public POODbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
