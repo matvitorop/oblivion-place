@@ -1,58 +1,45 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import Layout from "./pages/Layout";
+import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import { useUserStore } from "./components/state-manager/useStore";
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+function PrivateRoute({ element }: { element: JSX.Element }) {
+    const { user } = useUserStore();
+    return user ? element : <Navigate to="/login" replace />;
+}
+
+function AuthAccess({ element }: { element: JSX.Element }) {
+    const { user } = useUserStore();
+    return user ? <Navigate to="/" /> : element;
 }
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+    const { checkAuth } = useUserStore();
 
     useEffect(() => {
-        populateWeatherData();
-    }, []);
+        checkAuth();
+    }, [checkAuth]);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Layout />,
+            errorElement: <NotFound />,
+            children: [
+                { path: "/", element: <Home /> },
+                { path: "/login", element: <AuthAccess element={<Login />} /> },
+                { path: "/register", element: <AuthAccess element={<Register />} /> },
+                { path: "/dashboard", element: <PrivateRoute element={<Dashboard />} /> },
+            ],
+        },
+    ]);
 
-    return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
-    );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        if (response.ok) {
-            const data = await response.json();
-            setForecasts(data);
-        }
-    }
+    return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -97,5 +97,29 @@ namespace PlaceOfOblivion.Server.Controllers
 
             return Ok(user);
         }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var userId = this.GetUserIdOrThrowUnauthorized();
+
+            var user = await _userService.GetUserByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { user.Id, user.Username, user.Email });
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("auth_token");
+            return Ok(new { success = true, message = "Logged out successfully" });
+        }
     }
 }

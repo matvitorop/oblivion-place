@@ -47,9 +47,11 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/weatherforecast': {
-                target,
-                secure: false
+            "^/api": { // Проксі для всіх API-запитів
+                target: "https://localhost:7024",
+                changeOrigin: true,
+                secure: false,
+                ws: true
             }
         },
         port: 62026,
