@@ -9,19 +9,22 @@ interface UserState {
     logout: () => Promise<void>;
 }
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState & { isLoading: boolean }>((set) => ({
     user: null,
+    isLoading: true,
     setUser: (user) => set({ user }),
     checkAuth: async () => {
+        set({ isLoading: true });
         try {
             const user = await fetchUserProfile();
-            set({ user });
+            set({ user, isLoading: false });
         } catch {
-            set({ user: null });
+            set({ user: null, isLoading: false });
         }
     },
     logout: async () => {
         await logoutUser();
-        set({ user: null });
+        set({ user: null, isLoading: false });
     },
 }));
+
