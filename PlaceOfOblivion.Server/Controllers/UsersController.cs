@@ -42,12 +42,20 @@ namespace PlaceOfOblivion.Server.Controllers
                 return BadRequest("User already exists.");
             }
 
-            return Ok(new
+            // add token to cookie
+            var cookieOptions = new CookieOptions
             {
-                Token = result.Value.Token,
-                User = result.Value.User
-            });
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(3) // durability
+            };
+
+            Response.Cookies.Append("auth_token", result.Value.Token, cookieOptions);
+
+            return Ok(new { User = result.Value.User });
         }
+
 
         [HttpPost]
         [Route("login")]
@@ -60,11 +68,17 @@ namespace PlaceOfOblivion.Server.Controllers
                 return BadRequest("Invalid email or password");
             }
 
-            return Ok(new
+            var cookieOptions = new CookieOptions
             {
-                Token = result.Value.Token,
-                User = result.Value.User
-            });
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(3)
+            };
+
+            Response.Cookies.Append("auth_token", result.Value.Token, cookieOptions);
+
+            return Ok(new { User = result.Value.User });
         }
 
         // TOKEN AUTHORIZE TEST
