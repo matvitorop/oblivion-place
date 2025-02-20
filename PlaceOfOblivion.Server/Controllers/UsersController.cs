@@ -7,6 +7,7 @@ using PlaceOfOblivion.Server.Repositories.Interfaces;
 using PlaceOfOblivion.Server.Services.Interfaces;
 using PlaceOfOblivion.Server.Services;
 using System.Security.Claims;
+using PlaceOfOblivion.Server.Extensions;
 
 namespace PlaceOfOblivion.Server.Controllers
 {
@@ -72,7 +73,7 @@ namespace PlaceOfOblivion.Server.Controllers
         [Route("profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var userId = this.GetUserIdOrThrowUnauthorized();
             var user = await _userService.GetUserByIdAsync(userId);
 
             if (user == null)

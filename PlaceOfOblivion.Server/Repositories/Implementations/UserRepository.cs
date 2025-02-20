@@ -1,4 +1,5 @@
-﻿using PlaceOfOblivion.Server.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PlaceOfOblivion.Server.Data;
 using PlaceOfOblivion.Server.Models.Domain;
 using PlaceOfOblivion.Server.Models.DTO.User;
 using PlaceOfOblivion.Server.Repositories.Interfaces;
@@ -9,7 +10,6 @@ namespace PlaceOfOblivion.Server.Repositories.Implementations
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-
         public UserRepository(POODbContext dbContext) : base(dbContext) { }
         public async Task<User> AddUser(User user)
         {
@@ -50,6 +50,11 @@ namespace PlaceOfOblivion.Server.Repositories.Implementations
         {
             using var sha256 = SHA256.Create();
             return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
+        }
+        public async Task AddUserBalanceAsync(UserBalance balance)
+        {
+            await _context.UserBalances.AddAsync(balance);
+            await _context.SaveChangesAsync();
         }
     }
 }

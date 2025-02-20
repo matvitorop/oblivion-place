@@ -38,6 +38,15 @@ namespace PlaceOfOblivion.Server.Services.Implementations
 
             await _userRepository.AddAsync(user);
 
+            // adding record in user balance
+            
+            var userBalance = new UserBalance
+            {
+                UserId = user.Id,
+                Balance = 100
+            };
+            await _userRepository.AddUserBalanceAsync(userBalance);
+
             var token = _tokenGenerator.GenerateJwtToken(user);
             var userDTOResult = _mapper.Map<UserDTO>(user);
 

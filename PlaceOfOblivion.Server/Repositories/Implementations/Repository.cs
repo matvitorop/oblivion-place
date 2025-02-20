@@ -8,7 +8,7 @@ namespace PlaceOfOblivion.Server.Repositories.Implementations
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly POODbContext _context;
+        protected readonly POODbContext _context;
 
         public Repository(POODbContext context)
         {

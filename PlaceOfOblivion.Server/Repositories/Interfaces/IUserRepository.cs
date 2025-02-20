@@ -9,5 +9,7 @@ namespace PlaceOfOblivion.Server.Repositories.Interfaces
         Task<bool> CheckUserByEmail(AddUserDTO userDTO);
         Task<User> AddUser(User user);
         string HashPassword(string password);
+
+        Task AddUserBalanceAsync(UserBalance balance);
     }
 }
