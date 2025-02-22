@@ -71,6 +71,9 @@ builder.Services.AddDbContext<POODbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IUserBalanceRepository, UserBalanceRepsoitory>();
+builder.Services.AddScoped<IUserBalanceService, UserBalanceService>();
+
 //Adding automappers
 builder.Services.AddAutoMapper(typeof(UserMapper));
 

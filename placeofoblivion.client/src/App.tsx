@@ -11,7 +11,7 @@ import { useUserStore } from "./components/state-manager/useStore";
 function PrivateRoute({ element }: { element: JSX.Element }) {
     const { user, isLoading } = useUserStore();
 
-    if (isLoading) return <div>Loading...</div>; // Чекаємо, поки завантажиться
+    if (isLoading) return <div>Loading...</div>;
 
     return user ? element : <Navigate to="/login" replace />;
 }
