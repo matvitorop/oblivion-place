@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Test from "./pages/Test";
 import { useUserStore } from "./components/state-manager/useStore";
 
 function PrivateRoute({ element }: { element: JSX.Element }) {
@@ -43,6 +44,7 @@ function App() {
                 { path: "/login", element: <AuthAccess element={<Login />} /> },
                 { path: "/register", element: <AuthAccess element={<Register />} /> },
                 { path: "/dashboard", element: <PrivateRoute element={<Dashboard />} /> },
+                { path: "/test", element: <PrivateRoute element={<Test />} /> }
             ],
         },
     ]);

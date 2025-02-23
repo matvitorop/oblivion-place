@@ -27,4 +27,3 @@ export const useUserStore = create<UserState & { isLoading: boolean }>((set) => 
         set({ user: null, isLoading: false });
     },
 }));
-

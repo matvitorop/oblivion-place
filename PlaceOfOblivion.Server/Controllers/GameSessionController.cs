@@ -35,6 +35,7 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(gameSession);
         }
 
+        [Authorize]
         [HttpGet("history")]
         public async Task<IActionResult> GetUserGameSessions()
         {
