@@ -74,6 +74,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserBalanceRepository, UserBalanceRepsoitory>();
 builder.Services.AddScoped<IUserBalanceService, UserBalanceService>();
 
+builder.Services.AddScoped<IGameSessionRepository, GameSessionRepository>();
+builder.Services.AddScoped<IGameSessionService, GameSessionService>();
+
 //Adding automappers
 builder.Services.AddAutoMapper(typeof(UserMapper));
 
