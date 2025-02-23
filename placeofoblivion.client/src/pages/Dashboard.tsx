@@ -3,7 +3,8 @@ import { useUserStore } from "../components/state-manager/useStore";
 import { useBalanceStore } from "../components/state-manager/useBalanceStore";
 import { useGameSessionStore } from "../components/state-manager/useSessionStore";
 
-import { Button, Typography, Box } from "@mui/material";
+import { format } from "date-fns";
+import { Button, Typography, Box, Card} from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CasinoIcon from "@mui/icons-material/Casino";
 
@@ -27,52 +28,64 @@ export default function Dashboard() {
     };
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" gap={3}>
-            <Typography variant="h4">Welcome to oblivion</Typography>
+        <Box display="flex" flexDirection="column" alignItems="center" gap={3} width="100%" maxWidth="500px" mx="auto">
+            <Typography variant="h4" fontWeight="bold">Welcome to oblivion</Typography>
 
             {user ? (
                 <>
-                    <Typography variant="h6">Balance: {balance} coins</Typography>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        onClick={handleAddBalance}
-                        startIcon={<AddCircleOutlineIcon />}
-                        disabled={!canAddBalance}
-                    >
-                        Deposit +100
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={startSession}
-                        startIcon={<CasinoIcon />}
-                        disabled={balance < 50}
-                    >
-                        Play (10 coins)
-                    </Button>
+                    <Typography variant="h6">Balance: <b>{balance}</b> coins</Typography>
+
+                    <Box display="flex" gap={2}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            onClick={handleAddBalance}
+                            startIcon={<AddCircleOutlineIcon />}
+                            disabled={!canAddBalance}
+                        >
+                            Deposit +100
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={startSession}
+                            startIcon={<CasinoIcon />}
+                            disabled={balance < 10}
+                        >
+                            Play (10 coins)
+                        </Button>
+                    </Box>
 
                     {currentSession && (
-                        <Box textAlign="center">
-                            <Typography variant="h6">Result:</Typography>
-                            <Typography variant="body1">Symbols: {currentSession.symbols}</Typography>
+                        <Card sx={{ mt: 3, p: 2, width: "100%", textAlign: "center", boxShadow: 3 }}>
+                            <Typography variant="h6" color="primary">Result:</Typography>
                             <Typography variant="body1">
-                                {currentSession.isWin ? `Prize: +${currentSession.prize} coins!` : "You loosed!"}
+                                Symbols: <b>{Array.isArray(currentSession.symbols) ? currentSession.symbols.join(" ") : currentSession.symbols.split("").join(" ")}</b>
                             </Typography>
-                        </Box>
+                            <Typography variant="body1" color={currentSession.isWin ? "green" : "red"}>
+                                {currentSession.isWin ? `Prize: +${currentSession.prize} coins!` : "You lost!"}
+                            </Typography>
+                        </Card>
                     )}
 
                     <Typography variant="h6">Game history:</Typography>
                     <Box display="flex" flexDirection="column" gap={1}>
                         {sessions.length > 0 ? (
-                            sessions.map((session) => (
-                                <Box key={session.id} p={1} border="1px solid gray" borderRadius={2}>
-                                    <Typography variant="body2">
-                                        {session.playedAt} | Symbols: {session.symbols} |{" "}
-                                        {session.isWin ? `Prize: +${session.prize} coins` : "Loss"}
-                                    </Typography>
-                                </Box>
-                            ))
+                            sessions
+                                .slice(1, 6)
+                                .map((session) => (
+                                    <Box key={session.id} p={1} border="1px solid gray" borderRadius={2}>
+                                        <Typography variant="body2">
+                                            {format(new Date(session.playedAt), "dd.MM.yyyy HH:mm:ss")} | Symbols:{" "}
+                                            <b>
+                                                {Array.isArray(session.symbols)
+                                                    ? session.symbols.join(" ")
+                                                    : session.symbols.split("").join(" ")}
+                                            </b>{" "}
+                                            | {session.isWin ? `Prize: +${session.prize} coins` : "Loss"}
+                                        </Typography>
+                                    </Box>
+                                ))
                         ) : (
                             <Typography>No games played...</Typography>
                         )}
