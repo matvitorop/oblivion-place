@@ -3,8 +3,8 @@ export default function Home() {
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
+            <h1 id="tableLabel">Welcome to oblivion</h1>
+            <p>This is basic functionality for playing in slot roulette</p>
             <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>Play</Link>
         </div>
     )
