@@ -8,11 +8,19 @@ import { AuthRequest } from "./../interfaces/UserInterfaces";
 import { loginUser } from "../components/reusable-items/AuthController";
 import { useUserStore } from "../components/state-manager/useStore";
 
+/**
+ * Validation schema for login form.
+ */
 const schema = yup.object().shape({
     email: yup.string()/*.email("Invalid email format")*/.required("Email is required"),
     hashedPassword: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
 
+/**
+ * Login component for user authentication.
+ *
+ * @returns {JSX.Element} The login form.
+ */
 export default function Login() {
     const navigate = useNavigate();
     const {
@@ -24,6 +32,11 @@ export default function Login() {
         resolver: yupResolver(schema),
     });
 
+    /**
+     * Handles form submission and authenticates the user.
+     *
+     * @param {AuthRequest} data - The authentication credentials.
+     */
     const onSubmit = async (data: AuthRequest) => {
         try {
             const responseData = await loginUser(data.email, data.hashedPassword);

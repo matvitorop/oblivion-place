@@ -8,6 +8,12 @@ import { Button, Typography, Box, Card} from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CasinoIcon from "@mui/icons-material/Casino";
 
+/**
+ * Dashboard component representing the main user interface for the game.
+ * Displays balance, game history, and allows users to play a slot game.
+ *
+ * @returns {JSX.Element} The dashboard UI.
+ */
 export default function Dashboard() {
     const { user } = useUserStore();
     const { balance, fetchBalance, incrementBalance } = useBalanceStore();
@@ -15,11 +21,16 @@ export default function Dashboard() {
 
     const [canAddBalance, setCanAddBalance] = useState(true);
 
+    /** Fetches balance and game session history when the component mounts. */
     useEffect(() => {
         fetchBalance();
         fetchSessions();
     }, []);
 
+    /**
+     * Handles adding balance with a cooldown of 10 seconds.
+     * Prevents multiple consecutive balance additions.
+     */
     const handleAddBalance = async () => {
         if (!canAddBalance) return;
         setCanAddBalance(false);
@@ -33,8 +44,9 @@ export default function Dashboard() {
 
             {user ? (
                 <>
+                    {/* Balance Display */}
                     <Typography variant="h6">Balance: <b>{balance}</b> coins</Typography>
-
+                    {/* Action Buttons */}
                     <Box display="flex" gap={2}>
                         <Button
                             variant="contained"
@@ -55,7 +67,7 @@ export default function Dashboard() {
                             Play (10 coins)
                         </Button>
                     </Box>
-
+                    {/* Current Game Session Result */}
                     {currentSession && (
                         <Card sx={{ mt: 3, p: 2, width: "100%", textAlign: "center", boxShadow: 3 }}>
                             <Typography variant="h6" color="primary">Result:</Typography>
@@ -67,7 +79,7 @@ export default function Dashboard() {
                             </Typography>
                         </Card>
                     )}
-
+                    {/* Game History */}
                     <Typography variant="h6">Game history:</Typography>
                     <Box display="flex" flexDirection="column" gap={1}>
                         {sessions.length > 0 ? (

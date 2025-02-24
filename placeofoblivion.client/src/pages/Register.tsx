@@ -8,18 +8,32 @@ import { AuthRequest } from "./../interfaces/UserInterfaces";
 import FormInput from "../components/reusable-items/FormInput";
 import { useUserStore } from "../components/state-manager/useStore";
 
+/**
+ * Validation schema for the registration form.
+ */
 const schema = yup.object().shape({
     username: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
     email: yup.string().email("Invalid email format").required("Email is required"),
     hashedPassword: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
 
+/**
+ * Register component that provides a user registration form.
+ * Handles form submission and error validation.
+ *
+ * @returns {JSX.Element} The rendered registration form.
+ */
 export default function Register() {
     const navigate = useNavigate();
     const { control, handleSubmit, setError, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
 
+    /**
+     * Handles form submission by registering the user.
+     * 
+     * @param {AuthRequest} data - The user registration data.
+     */
     const onSubmit = async (data: AuthRequest) => {
         try {
             const result = await register(data);
