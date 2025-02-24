@@ -1,5 +1,18 @@
 {
+  // INSERTED
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  // INSERTED
+
   "files": [],
+  // INSERTED
+  "include": [ "src/**/*.ts", "src/**/*.tsx" ],
+  // INSERTED
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
