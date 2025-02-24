@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
+import CookiePopup from "./components/reusable-items/Cookie-popup";
 import { useUserStore } from "./components/state-manager/useStore";
 
 function PrivateRoute({ element }: { element: JSX.Element }) {
@@ -49,7 +50,13 @@ function App() {
         },
     ]);
 
-    return <RouterProvider router={router} />;
+    return (
+        <>
+            <CookiePopup />
+            <RouterProvider router={router} />;
+        </>
+    );
+        
 }
 
 export default App;
