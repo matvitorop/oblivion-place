@@ -12,6 +12,9 @@ using PlaceOfOblivion.Server.Models.DTO.UserBalance;
 
 namespace PlaceOfOblivion.Server.Controllers
 {
+    /// <summary>
+    /// A controller for managing the user's balance.
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class BalancesController : ControllerBase
@@ -30,6 +33,12 @@ namespace PlaceOfOblivion.Server.Controllers
             this._userBalanceService = userBalanceService;
         }
 
+        /// <summary>
+        /// Gets the balance of the current user.
+        /// </summary>
+        /// <returns>Object with currents user`s balance</returns>
+        /// <response code="200">Returns a balance</response>
+        /// <response code="401">The user is not authorized.</response>
         [Authorize]
         [HttpGet("balance")]
         public async Task<IActionResult> GetBalance()
@@ -41,6 +50,14 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(new { Balance = balance?.Balance ?? 0 });
         }
 
+        /// <summary>
+        /// Deposits user`s balance
+        /// </summary>
+        /// <param name="balanceDTO">Object with deposit sum</param>
+        /// <returns>Message about successful deposit or error</returns>
+        /// <response code="200">The balance has been successfully replenished.</response>
+        /// <response code="400">Failed to update the balance.</response>
+        /// <response code="401">The user is not authorized.</response>
         [Authorize]
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] BalanceUpdateDTO balanceDTO)
@@ -54,6 +71,14 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(new { Message = "Balance updated successfully" });
         }
 
+        /// <summary>
+        /// Withdraws funds from the user's balance.
+        /// </summary>
+        /// <param name="balanceDTO">An object with the amount to be withdrawn.</param>
+        /// <returns>Notification of successful withdrawal or error.</returns>
+        /// <response code="200">The balance has been successfully updated.</response>
+        /// <response code="400">Insufficient funds or balance update error.</response>
+        /// <response code="401">The user is not authorized.</response>
         [Authorize]
         [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] BalanceUpdateDTO balanceDTO)

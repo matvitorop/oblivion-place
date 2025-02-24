@@ -11,6 +11,9 @@ using PlaceOfOblivion.Server.Extensions;
 
 namespace PlaceOfOblivion.Server.Controllers
 {
+    /// <summary>
+    /// Controller to work with user data
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -30,7 +33,13 @@ namespace PlaceOfOblivion.Server.Controllers
             this._token = token;
             this._userService = userService;
         }
-
+        /// <summary>
+        /// Register new user and add token to necessary cookie
+        /// </summary>
+        /// <param name="userDTO">Data for user registration</param>
+        /// <returns>Return created user record or error</returns>
+        /// <response code="200">Registration successful, token add to cookie</response>
+        /// <response code="400">User is already exist</response>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] AddUserDTO userDTO)
@@ -56,7 +65,13 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(new { User = result.Value.User });
         }
 
-
+        /// <summary>
+        /// Login user and add token to necessary cookie
+        /// </summary>
+        /// <param name="userDTO">Data for login (email and password)</param>
+        /// <returns>Returns user record or error</returns>
+        /// <response code="200">Successful login, token added to cookie</response>
+        /// <response code="400">Wrong email or password</response>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] AddUserDTO userDTO)
@@ -81,7 +96,13 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(new { User = result.Value.User });
         }
 
-        // TOKEN AUTHORIZE TEST
+        /// <summary>
+        /// Get profile of current user (via token in cookie)
+        /// </summary>
+        /// <returns>Return current user profile</returns>
+        /// <response code="200">Returns user data</response>
+        /// <response code="401">User in unauthorized</response>
+        /// <response code="404">User is not found</response>
         [Authorize]
         [HttpGet]
         [Route("profile")]
@@ -98,6 +119,13 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// Get profile of current user (via token in cookie)
+        /// </summary>
+        /// <returns>Return current user profile</returns>
+        /// <response code="200">Returns user data</response>
+        /// <response code="401">User in unauthorized</response>
+        /// <response code="404">User is not found</response>
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()
@@ -114,6 +142,12 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(new { user.Id, user.Username, user.Email });
         }
 
+        /// <summary>
+        /// Exacute user logout, by deleting token from cookie
+        /// </summary>
+        /// <returns>Logout status</returns>
+        /// <response code="200">Logout is successful</response>
+        /// <response code="401">User is unauthorized</response>
         [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()

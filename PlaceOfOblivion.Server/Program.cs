@@ -9,6 +9,7 @@ using PlaceOfOblivion.Server.Repositories.Interfaces;
 using PlaceOfOblivion.Server.Services;
 using PlaceOfOblivion.Server.Services.Implementations;
 using PlaceOfOblivion.Server.Services.Interfaces;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +49,8 @@ builder.Services.AddSwaggerGen(c =>
         new string[] {}
     }
 });
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 

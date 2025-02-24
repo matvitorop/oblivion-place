@@ -7,6 +7,9 @@ using System.Security.Claims;
 
 namespace PlaceOfOblivion.Server.Controllers
 {
+    /// <summary>
+    /// Controller for managing game sessions.
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class GameSessionController : ControllerBase
@@ -19,6 +22,12 @@ namespace PlaceOfOblivion.Server.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Starts a new game session for the authenticated user.
+        /// </summary>
+        /// <returns>The result of the game session.</returns>
+        /// <response code="200">Game session started successfully.</response>
+        /// <response code="401">User is not authorized.</response>
         [Authorize]
         [HttpPost("play")]
         public async Task<IActionResult> PlayGame()
@@ -35,6 +44,12 @@ namespace PlaceOfOblivion.Server.Controllers
             return Ok(gameSession);
         }
 
+        /// <summary>
+        /// Retrieves the game session history of the authenticated user.
+        /// </summary>
+        /// <returns>A list of game sessions.</returns>
+        /// <response code="200">Game session history retrieved successfully.</response>
+        /// <response code="401">User is not authorized.</response>
         [Authorize]
         [HttpGet("history")]
         public async Task<IActionResult> GetUserGameSessions()
