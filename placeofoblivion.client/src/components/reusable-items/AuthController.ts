@@ -2,6 +2,14 @@ import { AuthRequest, User } from "../../interfaces/UserInterfaces";
 
 const API_URL = "https://localhost:7024/Users";
 
+/**
+ * Logs in a user by sending credentials to the server.
+ * 
+ * @param {string} email - The user's email.
+ * @param {string} hashedPassword - The hashed password.
+ * @returns {Promise<any>} - The authentication response.
+ * @throws {Error} - If the email or password is incorrect.
+ */
 export async function loginUser(email: string, hashedPassword: string) {
     const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -21,6 +29,13 @@ export async function loginUser(email: string, hashedPassword: string) {
     return await response.json();
 }
 
+/**
+ * Registers a new user.
+ * 
+ * @param {AuthRequest} data - The user registration data.
+ * @returns {Promise<any>} - The registration response.
+ * @throws {Error} - If the email is already used.
+ */
 export const register = async (data: AuthRequest) => {
     const response = await fetch(`${API_URL}/register`, {
         method: "POST",
@@ -36,6 +51,11 @@ export const register = async (data: AuthRequest) => {
     return response.json();
 }
 
+/**
+ * Logs out the currently authenticated user.
+ * 
+ * @returns {Promise<void>} - Resolves when logout is complete.
+ */
 export const logoutUser = async () => {
     await fetch(`${API_URL}/logout`, {
         method: "POST",
@@ -43,6 +63,12 @@ export const logoutUser = async () => {
     });
 };
 
+/**
+ * Fetches the authenticated user's profile.
+ * 
+ * @returns {Promise<User>} - The user's profile data.
+ * @throws {Error} - If the user is not authenticated.
+ */
 export const fetchUserProfile = async (): Promise<User> => {
     const response = await fetch(`${API_URL}/me`, {
         method: "GET",

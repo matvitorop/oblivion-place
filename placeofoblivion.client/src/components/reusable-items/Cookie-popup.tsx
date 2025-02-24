@@ -1,5 +1,17 @@
 import CookieConsent from "react-cookie-consent";
 
+/**
+ * CookiePopup component displays a cookie consent banner
+ * at the bottom of the screen, allowing users to accept or decline cookies.
+ * 
+ * - Stores consent choice in a cookie named `user_consent`
+ * - Expires in 150 days
+ * - Uses Material UI styling for buttons
+ * - Provides a link to the Privacy Policy
+ *
+ * @component
+ * @returns {JSX.Element} The cookie consent popup.
+ */
 const CookiePopup: React.FC = () => {
     return (
         <CookieConsent
