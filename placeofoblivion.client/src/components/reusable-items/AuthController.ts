@@ -81,3 +81,31 @@ export const fetchUserProfile = async (): Promise<User> => {
 
     return response.json();
 };
+
+export async function updateUserData(updatedData: Partial<User>) {
+    const response = await fetch(`${API_URL}/update`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to update user");
+    }
+
+    return await response.json();
+}
+
+export async function deleteUserAccount() {
+    const response = await fetch(`${API_URL}/delete`, {
+        method: "POST",
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete account");
+    }
+
+    return await response.json();
+}

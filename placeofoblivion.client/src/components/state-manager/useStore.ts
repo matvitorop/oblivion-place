@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { User } from "../../interfaces/UserInterfaces";
-import { logoutUser, fetchUserProfile } from "../reusable-items/AuthController";
+import { logoutUser, fetchUserProfile, deleteUserAccount, updateUserData } from "../reusable-items/AuthController";
 
 /**
  * Interface representing the state and actions for managing user authentication.
@@ -17,6 +17,13 @@ interface UserState {
 
     /** Logs out the user and clears authentication state. */
     logout: () => Promise<void>;
+
+    //** Update current user`s data*/
+    updateUser: (updatedData: Partial<User>) => Promise<void>;
+
+    //** Deleting user form database*/
+    deleteUser: () => Promise<void>;
+
 }
 
 /**
@@ -47,5 +54,23 @@ export const useUserStore = create<UserState & { isLoading: boolean }>((set) => 
     logout: async () => {
         await logoutUser();
         set({ user: null, isLoading: false });
+    },
+
+    updateUser: async (updatedData) => {
+        try {
+            const updatedUser = await updateUserData(updatedData);
+            set({ user: updatedUser });
+        } catch (error) {
+            console.error("Failed to update user", error);
+        }
+    },
+    deleteUser: async () => {
+        try {
+            await deleteUserAccount();
+            set({ user: null });
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Failed to delete account", error);
+        }
     },
 }));
