@@ -28,7 +28,8 @@ cd PlaceOfOblivion.Server
 # Execute migration
 dotnet ef database update
 # Launch a server
-dotnet run
+set ASPNETCORE_ENVIRONMENT=Development (development mode with swagger)
+dotnet run --urls "https://localhost:7024;http://localhost:5287"
 ```
 _Also you can find [example appsettings.json](./PlaceOfOblivion.Server/data-example.json) to make your connection string_
 ### 3. Launch frontend part (React)
