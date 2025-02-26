@@ -29,7 +29,7 @@ export default function Layout() {
                     {/* User Authentication Controls */}
                     {user ? (
                         <div style={{ display: "flex", alignItems: "center" }}> {}
-                            <span>{user.username}</span>
+                            <Link to="/profile" style={{ color: "white", textDecoration: "none" }}>{user.username}</Link>
                             <button onClick={logout} style={{ marginLeft: "10px" }}>Logout</button>
                         </div>
                     ) : (
