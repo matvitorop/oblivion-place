@@ -176,5 +176,28 @@ namespace PlaceOfOblivion.Server.Controllers
             }
             return BadRequest("Invalid user");
         }
+
+        /// <summary>
+        /// Update user profile (username, email, password)
+        /// </summary>
+        /// <param name="updateUserDTO">Data for updating user</param>
+        /// <returns>Updated user data or error</returns>
+        /// <response code="200">User updated successfully</response>
+        /// <response code="400">Invalid data</response>
+        /// <response code="401">User is unauthorized</response>
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser([FromBody] AddUserDTO updateUserDTO)
+        {
+            var userId = this.GetUserIdOrThrowUnauthorized();
+            var result = await _userService.UpdateUserAsync(userId, updateUserDTO);
+
+            if (result == null)
+            {
+                return BadRequest("Failed to update user.");
+            }
+
+            return Ok(result);
+        }
     }
 }

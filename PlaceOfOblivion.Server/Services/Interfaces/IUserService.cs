@@ -1,4 +1,5 @@
-﻿using PlaceOfOblivion.Server.Models.DTO.User;
+﻿using PlaceOfOblivion.Server.Models.Domain;
+using PlaceOfOblivion.Server.Models.DTO.User;
 
 namespace PlaceOfOblivion.Server.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace PlaceOfOblivion.Server.Services.Interfaces
         Task<(string Token, UserDTO User)?> LoginAsync(AddUserDTO userDTO);
 
         Task<bool> DeleteUserAsync(int id);
+        Task<User?> UpdateUserAsync(int userId, AddUserDTO updateUserDTO);
     }
 }

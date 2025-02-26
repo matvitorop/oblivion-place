@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PlaceOfOblivion.Server.Models.Domain;
 using PlaceOfOblivion.Server.Models.DTO.User;
+using PlaceOfOblivion.Server.Repositories.Implementations;
 using PlaceOfOblivion.Server.Repositories.Interfaces;
 using PlaceOfOblivion.Server.Services.Interfaces;
 
@@ -77,6 +78,26 @@ namespace PlaceOfOblivion.Server.Services.Implementations
             
             await _userRepository.DeleteAsync(user);
             return true;
+        }
+
+        public async Task<User?> UpdateUserAsync(int userId, AddUserDTO updateUserDTO)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return null;
+
+            var result = await _userRepository.AnyAsync(t => t.Email == updateUserDTO.Email && t.Id != user.Id);
+            if (result == true) return null;
+
+            user.Username = updateUserDTO.Username;
+            user.Email = updateUserDTO.Email;
+
+            if (!string.IsNullOrEmpty(updateUserDTO.HashedPassword))
+            {
+                user.HashedPassword = _userRepository.HashPassword(updateUserDTO.HashedPassword);
+            }
+
+            await _userRepository.UpdateAsync(user);
+            return user;
         }
     }
 }
