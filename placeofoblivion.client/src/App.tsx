@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Test from "./pages/Test";
+import Profile from "./pages/Profile";
 import CookiePopup from "./components/reusable-items/Cookie-popup";
 import { useUserStore } from "./components/state-manager/useStore";
 
@@ -45,7 +45,7 @@ function App() {
                 { path: "/login", element: <AuthAccess element={<Login />} /> },
                 { path: "/register", element: <AuthAccess element={<Register />} /> },
                 { path: "/dashboard", element: <PrivateRoute element={<Dashboard />} /> },
-                { path: "/test", element: <PrivateRoute element={<Test />} /> }
+                { path: "/profile", element: <PrivateRoute element={<Profile />} /> }
             ],
         },
     ]);

@@ -82,6 +82,12 @@ export const fetchUserProfile = async (): Promise<User> => {
     return response.json();
 };
 
+/**
+ * Update user`s data
+ * 
+ * @returns {Partial<User>} - The user's profile data.
+ * @throws {Error} - If the user is not authenticated or invalid data.
+ */
 export async function updateUserData(updatedData: Partial<User>) {
     const response = await fetch(`${API_URL}/update`, {
         method: "PUT",
@@ -97,6 +103,12 @@ export async function updateUserData(updatedData: Partial<User>) {
     return await response.json();
 }
 
+/**
+ * Delete user`s data from database
+ * 
+ * @returns {Promise<any>} - Result of deleting user.
+ * @throws {Error} - If the user is not authenticated or invalid data.
+ */
 export async function deleteUserAccount() {
     const response = await fetch(`${API_URL}/delete`, {
         method: "POST",

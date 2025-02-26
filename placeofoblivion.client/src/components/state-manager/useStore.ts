@@ -56,6 +56,7 @@ export const useUserStore = create<UserState & { isLoading: boolean }>((set) => 
         set({ user: null, isLoading: false });
     },
 
+    //** Update current user`s data*/
     updateUser: async (updatedData) => {
         try {
             const updatedUser = await updateUserData(updatedData);
@@ -64,11 +65,13 @@ export const useUserStore = create<UserState & { isLoading: boolean }>((set) => 
             console.error("Failed to update user", error);
         }
     },
+
+    //** Deleting user form database*/
     deleteUser: async () => {
         try {
             await deleteUserAccount();
             set({ user: null });
-            window.location.href = "/";
+            //window.location.href = "/";
         } catch (error) {
             console.error("Failed to delete account", error);
         }
