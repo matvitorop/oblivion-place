@@ -155,5 +155,26 @@ namespace PlaceOfOblivion.Server.Controllers
             Response.Cookies.Delete("auth_token");
             return Ok(new { success = true, message = "Logged out successfully" });
         }
+
+        /// <summary>
+        /// Delete user profile, linked records and token
+        /// </summary>
+        /// <returns>Return result message</returns>
+        /// <response code="200">User deleted successfully</response>
+        /// <response code="401">User in unauthorized</response>
+        /// <response code="400">Invalid user</response>
+        [Authorize]
+        [HttpPost("delete")]
+        public async Task<IActionResult> Delete()
+        {
+            var userId = this.GetUserIdOrThrowUnauthorized();
+            Response.Cookies.Delete("auth_token");
+
+            if(await _userService.DeleteUserAsync(userId) == true)
+            {
+                return Ok(new { success = true, message = "User deleted successfully" });
+            }
+            return BadRequest("Invalid user");
+        }
     }
 }

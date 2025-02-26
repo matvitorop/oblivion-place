@@ -7,5 +7,7 @@ namespace PlaceOfOblivion.Server.Services.Interfaces
         Task<UserDTO?> GetUserByIdAsync(int id);
         Task<(string Token, UserDTO User)?> RegisterAsync(AddUserDTO userDTO);
         Task<(string Token, UserDTO User)?> LoginAsync(AddUserDTO userDTO);
+
+        Task<bool> DeleteUserAsync(int id);
     }
 }

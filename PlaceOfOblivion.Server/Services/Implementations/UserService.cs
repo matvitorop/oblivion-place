@@ -66,5 +66,17 @@ namespace PlaceOfOblivion.Server.Services.Implementations
             var userDto = _mapper.Map<UserDTO>(user);
             return (token, userDto);
         }
+
+        public async Task<bool> DeleteUserAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            
+            await _userRepository.DeleteAsync(user);
+            return true;
+        }
     }
 }
