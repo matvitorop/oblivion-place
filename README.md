@@ -48,8 +48,6 @@ This project is using **MIT LICENSE**. For more details, see:
 ## :grinning: Authors
 [TOROP Matvii](https://github.com/matvitorop) - backend and frontend developer, idea creator
 ## :star: Additional
-_here can be you advertisement_
-
-
-
-
+- [Privacy policy](./PRIVACY_POLICY.md)
+- [Storybook](./placeofoblivion.client/.storybook)
+- [Frontend documentation](./frontend-documentation)
