@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { Button, Typography, Box, Card} from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CasinoIcon from "@mui/icons-material/Casino";
+import ChatWidget from "../components/reusable-items/ChatWidget";
 
 /**
  * Dashboard component representing the main user interface for the game.
@@ -108,6 +109,7 @@ export default function Dashboard() {
                     Need authorization
                 </Typography>
             )}
+        <ChatWidget />
         </Box>
     );
 }

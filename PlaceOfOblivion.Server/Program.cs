@@ -11,6 +11,7 @@ using PlaceOfOblivion.Server.Services.Implementations;
 using PlaceOfOblivion.Server.Services.Interfaces;
 using System.Reflection;
 using System.Text;
+using PlaceOfOblivion.Server.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -121,6 +122,7 @@ builder.Services.AddAuthentication(options =>
 
 //Add service for token generations
 builder.Services.AddScoped<TokenGenerator>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -145,4 +147,5 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
